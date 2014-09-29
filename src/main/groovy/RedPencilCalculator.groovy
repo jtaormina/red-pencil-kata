@@ -1,26 +1,38 @@
 class RedPencilCalculator {
-	
+
 	def initialPrice
 	def price
-	
+	def onPromotion
+
 	public RedPencilCalculator(initialPrice) {
 		this.initialPrice = initialPrice
 		this.price = initialPrice
+		this.onPromotion = false
 	}
-	
-	public updatePrice(newPrice) { 
-		if (isThisOnPromotion(this.initialPrice, newPrice)) {
-			this.initialPrice = this.price
+
+	public updatePrice(newPrice) {
+		if (endPromotion(newPrice)) {
+			this.onPromotion = false
 		}
-		this.price = newPrice	
+		else {
+			this.onPromotion = inPromotionRange(newPrice)
+			if (this.onPromotion) {
+				this.initialPrice = this.price
+			}
+		}
+		this.price = newPrice
 	}
-	
-	private isThisOnPromotion(initialPrice, newPrice) {
+
+	private endPromotion(newPrice) {
+		this.onPromotion && ((newPrice > this.price) ||
+				(1-(newPrice/initialPrice)) > 0.3)
+	}
+
+	private inPromotionRange(newPrice) {
 		(1-(newPrice/initialPrice)) >= 0.05 && (1-(newPrice/initialPrice)) <= 0.3
 	}
-	
+
 	public isOnPromotion() {
-		this.isThisOnPromotion(this.initialPrice, this.price)
-	} 
-	
+		this.onPromotion
+	}
 }
