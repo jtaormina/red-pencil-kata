@@ -29,7 +29,7 @@ class RedPencilTests extends GroovyTestCase {
 	}
 	
 	@Test
-	public void testPromotionEndsPriceIsIncreased() {
+	public void testPromotionEndsWhenPriceIsIncreased() {
 		calc.updatePrice(75)
 		assertTrue(calc.isOnPromotion())
 		calc.updatePrice(90)
